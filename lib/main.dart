@@ -34,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int current_page_index = 0;
+  int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
         bottomNavigationBar: NavigationBar(
             onDestinationSelected: (int index) {
               setState(() {
-                current_page_index = index;
+                currentPageIndex = index;
               });
             },
+            selectedIndex: currentPageIndex,
             destinations: const <Widget>[
               NavigationDestination(
                 selectedIcon: Icon(Icons.home),
@@ -63,10 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: 'Messages',
               ),
             ]),
-        body: [
-          const Home(),
-          const Notifications(),
-          const Messages(),
-        ][current_page_index]);
+        body: const [
+          Home(),
+          Notifications(),
+          Messages(),
+        ][currentPageIndex]);
   }
 }
