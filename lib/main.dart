@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:veritas/pages/feed.dart';
 import 'package:veritas/pages/home.dart';
 import 'package:veritas/pages/messages.dart';
 import 'package:veritas/pages/notifications.dart';
@@ -50,23 +51,30 @@ class _MyHomePageState extends State<MyHomePage> {
               NavigationDestination(
                 selectedIcon: Icon(Icons.home),
                 icon: Icon(Icons.home_outlined),
-                label: 'Home',
+                label: 'Feed',
               ),
               NavigationDestination(
-                icon: Badge(child: Icon(Icons.notifications_sharp)),
-                label: 'Notifications',
+                icon: Badge(child: Icon(Icons.star_sharp)),
+                label: '',
               ),
               NavigationDestination(
-                icon: Badge(
-                  label: Text('2'),
-                  child: Icon(Icons.messenger_sharp),
-                ),
-                label: 'Messages',
+                icon: Icon(Icons.add_sharp),
+                label: '+',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.blender_sharp),
+                label: 'Catalogue',
+              ),
+              NavigationDestination(
+                icon: Badge(child: Icon(Icons.person_outline_sharp)),
+                label: 'Profile',
               ),
             ]),
         body: const [
-          Home(),
+          Feed(),
           Notifications(),
+          Messages(),
+          Home(),
           Messages(),
         ][currentPageIndex]);
   }

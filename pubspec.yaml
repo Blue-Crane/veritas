@@ -37,6 +37,7 @@ dependencies:
   http: ^1.2.1
   json_annotation: ^4.8.0
   transparent_image: ^2.0.1
+  line_icons: ^2.0.3
 
 dev_dependencies:
   build_runner: ^2.3.3
