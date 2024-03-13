@@ -1,8 +1,13 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:veritas/pages/feed.dart';
 import 'package:veritas/pages/home.dart';
 import 'package:veritas/pages/messages.dart';
 import 'package:veritas/pages/notifications.dart';
+import 'package:line_icons/line_icons.dart' show LineIcons;
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Veritas',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x567565)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF5099)),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Veritas'),
@@ -47,35 +52,48 @@ class _MyHomePageState extends State<MyHomePage> {
               });
             },
             selectedIndex: currentPageIndex,
-            destinations: const <Widget>[
-              NavigationDestination(
-                selectedIcon: Icon(Icons.home),
-                icon: Icon(Icons.home_outlined),
+            destinations: <Widget>[
+              const NavigationDestination(
+                icon: Icon(LineIcons.glassCheers),
                 label: 'Feed',
               ),
+              const NavigationDestination(
+                icon: Badge(child: Icon(LineIcons.star)),
+                label: 'Favorite',
+              ),
               NavigationDestination(
-                icon: Badge(child: Icon(Icons.star_sharp)),
+                icon: Ink(
+                  decoration: const ShapeDecoration(
+                    color: Colors.red,
+                    shape: CircleBorder(),
+                  ),
+                  child: IconButton(
+                    icon: const Icon(LineIcons.plus),
+                    iconSize: 30,
+                    color: Colors.black,
+                    onPressed: () {},
+                  ),
+                ),
                 label: '',
               ),
-              NavigationDestination(
-                icon: Icon(Icons.add_sharp),
-                label: '+',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.blender_sharp),
+              const NavigationDestination(
+                icon: Icon(LineIcons.alternateWineGlass),
                 label: 'Catalogue',
               ),
-              NavigationDestination(
-                icon: Badge(child: Icon(Icons.person_outline_sharp)),
+              const NavigationDestination(
+                icon: Badge(child: Icon(LineIcons.userTie)),
                 label: 'Profile',
               ),
             ]),
-        body: const [
-          Feed(),
-          Notifications(),
-          Messages(),
-          Home(),
-          Messages(),
-        ][currentPageIndex]);
+        body: Container(
+          padding: const EdgeInsets.only(top: 5),
+          child: const [
+            Feed(),
+            Notifications(),
+            Messages(),
+            Home(),
+            Messages(),
+          ][currentPageIndex],
+        ));
   }
 }

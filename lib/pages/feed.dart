@@ -47,10 +47,28 @@ class _FeedState extends State<Feed> {
         if (snapshot.hasData) {
           final items =
               snapshot.data!.map((item) => FeedCard(item: item)).toList();
-          return ListView(
-            // padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            children: items,
+
+          return ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              if (index == 0) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: const Text("Veritas!",
+                            style: TextStyle(
+                              fontSize: 40,
+                            ))),
+                    items[index],
+                  ],
+                );
+              } else {
+                return items[index];
+              }
+            },
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');

@@ -38,6 +38,9 @@ class FeedCard extends StatelessWidget {
                 ))
           ],
         ),
+        const SizedBox(
+          height: 10,
+        ),
         FadeInImage.memoryNetwork(
           width: MediaQuery.of(context).size.width,
           placeholder: kTransparentImage,
@@ -48,33 +51,70 @@ class FeedCard extends StatelessWidget {
           height: 10,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(children: [
-              const Icon(
-                LineIcons.burn,
-                color: Colors.black,
+            Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 35,
+                    child: IconButton(
+                      onPressed: () => print("Burn"),
+                      icon: const Icon(
+                        LineIcons.burn,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  SizedBox(
+                    width: 35,
+                    child: IconButton(
+                      onPressed: () => print("Comment"),
+                      icon: Badge(
+                        label: Text(
+                          "${(item.price * 10).round().toString().substring(0, 2)}k",
+                          style: const TextStyle(fontSize: 8),
+                        ),
+                        child: const Icon(
+                          LineIcons.alternateComment,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                      ),
+                      padding: EdgeInsets.zero,
+                      constraints:
+                          const BoxConstraints(minWidth: 35, maxWidth: 35),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  SizedBox(
+                    width: 35,
+                    child: IconButton(
+                      onPressed: () => print("Wine"),
+                      icon: const Icon(
+                        LineIcons.wineBottle,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      padding: EdgeInsets.zero,
+                      constraints:
+                          const BoxConstraints(minWidth: 35, maxWidth: 35),
+                    ),
+                  ),
+                ]),
+            const Spacer(),
+            IconButton(
+              onPressed: () => print("Favorite"),
+              icon: const Icon(
+                LineIcons.star,
                 size: 30,
+                color: Colors.amber,
               ),
-              const SizedBox(
-                width: 15,
-              ),
-              Badge(
-                label: Text(
-                  item.price.toString().substring(0, 3) + 'k',
-                  style: const TextStyle(fontSize: 8),
-                ),
-                child: const Icon(
-                  LineIcons.alternateComment,
-                  color: Colors.black,
-                  size: 30,
-                ),
-              ),
-            ]),
-            const Icon(
-              LineIcons.star,
-              size: 30,
-              color: Colors.amber,
             ),
           ],
         ),
@@ -82,10 +122,18 @@ class FeedCard extends StatelessWidget {
           height: 10,
         ),
         Text(
+          "Burns: ${(item.price * 314.1592).round().toString()}",
+          style: const TextStyle(
+              fontSize: 14, color: Color.fromARGB(220, 95, 95, 95)),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
           item.description,
           maxLines: 5,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontSize: 13),
+          style: const TextStyle(fontSize: 13),
         ),
         const SizedBox(
           height: 10,
