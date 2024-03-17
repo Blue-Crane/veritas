@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:veritas/pages/feed.dart';
 import 'package:veritas/pages/home.dart';
 import 'package:veritas/pages/messages.dart';
@@ -44,56 +41,74 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: NavigationBar(
-            onDestinationSelected: (int index) {
-              setState(() {
-                currentPageIndex = index;
-              });
-            },
-            selectedIndex: currentPageIndex,
-            destinations: <Widget>[
-              const NavigationDestination(
-                icon: Icon(LineIcons.glassCheers),
-                label: 'Feed',
-              ),
-              const NavigationDestination(
-                icon: Badge(child: Icon(LineIcons.star)),
-                label: 'Favorite',
-              ),
-              NavigationDestination(
-                icon: Ink(
-                  decoration: const ShapeDecoration(
-                    color: Colors.red,
-                    shape: CircleBorder(),
+    return BlocProvider(
+        create: (context) => CommentsCubit(),
+        child: Scaffold(
+            bottomNavigationBar: NavigationBar(
+                onDestinationSelected: (int index) {
+                  setState(() {
+                    currentPageIndex = index;
+                  });
+                },
+                selectedIndex: currentPageIndex,
+                destinations: <Widget>[
+                  const NavigationDestination(
+                    icon: Icon(LineIcons.glassCheers),
+                    label: 'Feed',
                   ),
-                  child: IconButton(
-                    icon: const Icon(LineIcons.plus),
-                    iconSize: 30,
-                    color: Colors.black,
-                    onPressed: () {},
+                  const NavigationDestination(
+                    icon: Badge(child: Icon(LineIcons.star)),
+                    label: 'Favorite',
                   ),
-                ),
-                label: '',
-              ),
-              const NavigationDestination(
-                icon: Icon(LineIcons.alternateWineGlass),
-                label: 'Catalogue',
-              ),
-              const NavigationDestination(
-                icon: Badge(child: Icon(LineIcons.userTie)),
-                label: 'Profile',
-              ),
-            ]),
-        body: Container(
-          padding: const EdgeInsets.only(top: 5),
-          child: const [
-            Feed(),
-            Notifications(),
-            Messages(),
-            Home(),
-            Messages(),
-          ][currentPageIndex],
-        ));
+                  NavigationDestination(
+                    icon: Ink(
+                      decoration: const ShapeDecoration(
+                        color: Colors.red,
+                        shape: CircleBorder(),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(LineIcons.plus),
+                        iconSize: 30,
+                        color: Colors.black,
+                        onPressed: () {},
+                      ),
+                    ),
+                    label: '',
+                  ),
+                  const NavigationDestination(
+                    icon: Icon(LineIcons.alternateWineGlass),
+                    label: 'Catalogue',
+                  ),
+                  const NavigationDestination(
+                    icon: Badge(child: Icon(LineIcons.userTie)),
+                    label: 'Profile',
+                  ),
+                ]),
+            body: Container(
+              padding: const EdgeInsets.only(top: 5),
+              child: const [
+                Feed(),
+                Notifications(),
+                Messages(),
+                Home(),
+                Messages(),
+              ][currentPageIndex],
+            ),
+            bottomSheet: BottomSheet(
+              onClosing: () => context.read<CommentsCubit>().set(null),
+              builder: (context) {
+                return BlocBuilder<CommentsCubit, String?>(
+                    builder: ((context, state) {
+                  print("context state: ${state}");
+                  if (state == null) {
+                    return const SizedBox(height: 0);
+                  }
+                  return SizedBox(
+                    height: 50,
+                    child: Text(state),
+                  );
+                }));
+              },
+            )));
   }
 }
